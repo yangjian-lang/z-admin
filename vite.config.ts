@@ -15,10 +15,10 @@ export default defineConfig(({ command, mode }) => {
     // 代理服务器配置
     server: {
       proxy: {
-        [env.VITE_APP_BASE_API]: {
+         '/api': {
           target: 'http://sph-api.atguigu.cn', // 获取数据的服务器地址
           changeOrigin: true, // 需要代理跨域
-          rewrite: (path) => path.replace(/^\/api/, '') //路径重写
+           pathRewrite: { '^/api': '' }  //路径重写
         }
       }
     },
