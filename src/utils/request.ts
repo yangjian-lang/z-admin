@@ -3,7 +3,7 @@ import { ElMessage } from 'element-plus'
 import useUserStore from '@/store/modules/user.ts'
 
 const request = axios.create({
-    baseURL: 'http://sph-api.atguigu.cn', // import.meta.env.VITE_APP_BASE_API
+    baseURL: '/api', // import.meta.env.VITE_APP_BASE_API
     timeout: 5000
 })
 
