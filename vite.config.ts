@@ -12,16 +12,16 @@ export default defineConfig(({ command, mode }) => {
 
   const env = loadEnv(mode, process.cwd()) // 获取各个环境下的环境变量
   return {
-    // 代理服务器配置
-    server: {
-      proxy: {
-         '/api': {
-          target: 'http://sph-api.atguigu.cn', // 获取数据的服务器地址
-          changeOrigin: true, // 需要代理跨域
-           pathRewrite: { '^/api': '' }  //路径重写
-        }
-      }
-    },
+    // // 代理服务器配置
+    // server: {
+    //   proxy: {
+    //      '/api': {
+    //       target: 'http://sph-api.atguigu.cn', // 获取数据的服务器地址
+    //       changeOrigin: true, // 需要代理跨域
+    //        pathRewrite: { '^/api': '' }  //路径重写
+    //     }
+    //   }
+    // },
     plugins: [
       vue(),
       // 按需引入element-plus
