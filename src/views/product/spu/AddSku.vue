@@ -50,7 +50,7 @@
                         <el-table-column type="index" label="序号" width="80" align="center"></el-table-column>
                         <el-table-column label="图片" width="300" align="center">
                             <template #default="{ row }">
-                                <img style="width: 100px;height: 100px;" :src="row.imgUrl" alt="row.imgName">
+                                <img style="width: 100px;height: 100px;" :src="row.imgUrl" :alt="row.imgName">
                             </template>
                         </el-table-column>
                         <el-table-column label="名称" prop="imgName" width="width" align="center"></el-table-column>
@@ -138,33 +138,43 @@ const selectDefaultImg = (row: any) => {
 }
 // 点击保存
 const handleSaveSku = async () => {
-    await skuForms.value.validate() // 等待表单验证通过后在执行下面代码
-    // 整理参数
+    // 先验证表单
+    const valid = await skuForms.value.validate()
+    if (!valid) {
+        return
+    }
+    
+    // 创建数据副本，避免修改原始表单数据
+    const data = {
+        ...skuForm,
+        skuAttrValueList: [],
+        skuSaleAttrValueList: []
+    }
+    
     // 整理平台属性参数
     let attrList = productStore.attrList
     attrList.forEach(item => {
         if (item.attrIdAndValueId) {
             const [attrId, valueId] = item.attrIdAndValueId.split(':')
-            skuForm.skuAttrValueList.push({
+            data.skuAttrValueList.push({
                 attrId,
                 valueId
             })
-
         }
     })
+    
     // 整理销售属性数据
     let saleAttrList = spuSaleAttrList.value
     saleAttrList.forEach((item: any) => {
         if (item.saleAttrIdAndSaleAttrValueId) {
             const [saleAttrId, saleAttrValueId] = item.saleAttrIdAndSaleAttrValueId.split(':')
-            skuForm.skuSaleAttrValueList.push({
+            data.skuSaleAttrValueList.push({
                 saleAttrId,
                 saleAttrValueId
             })
         }
     })
-    // 收集数据
-    const data = skuForm
+    
     try {
         await productStore.saveSkuInfo(data)
         // 通知父组件将页面状态切换为'list'
@@ -174,8 +184,6 @@ const handleSaveSku = async () => {
     } catch (error) {
         ElMessage.error(error)
     }
-
-
 }
 // 点击取消
 const handleCancel = () => {
