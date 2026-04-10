@@ -49,13 +49,13 @@
                     <el-table :data="spuImgList" border stripe ref="spuTableImgDom">
                         <el-table-column type="index" label="序号" width="80" align="center"></el-table-column>
                         <el-table-column label="图片" width="300" align="center">
-                            <template #=row>
+                            <template #default="{ row }">
                                 <img style="width: 100px;height: 100px;" :src="row.imgUrl" alt="row.imgName">
                             </template>
                         </el-table-column>
                         <el-table-column label="名称" prop="imgName" width="width" align="center"></el-table-column>
                         <el-table-column label="操作" prop="prop" width="200" align="center">
-                            <template #=row>
+                            <template #default="{ row }">
                                 <el-button v-if="!row.isDefault" type="primary" size="large"
                                     @click="selectDefaultImg(row)">设为默认</el-button>
                                 <el-button v-else size="large">默认图片</el-button>

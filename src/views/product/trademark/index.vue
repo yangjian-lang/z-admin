@@ -52,7 +52,7 @@
                 <!-- 品牌图片上传 -->
                 <el-form-item label="品牌LOGO" prop="logoUrl">
                     <el-upload class="avatar-uploader" action="/api/admin/product/fileUpload" :show-file-list="false"
-                        :before-upload="beforeAvatarUpload" :on-success="handleAvatarSuccess">
+                        :before-upload="beforeAvatarUpload" :on-success="handleAvatarSuccess" :headers="{ Authorization: localStorage.getItem('token') }">
                         <img v-if="trademarkform.logoUrl" :src="trademarkform.logoUrl" class="avatar" />
                         <el-icon v-else class="avatar-uploader-icon">
                             <Plus />
@@ -175,8 +175,10 @@ const handleConfirm = async () => {
 }
 // 图片上传成功后
 const handleAvatarSuccess = (res: any) => {
+    console.log('上传成功，后端返回:', res);
     // 将上传到服务器的图片地址赋值给本地的logoUrl
-    trademarkform.logoUrl = res.data
+    trademarkform.logoUrl = res.url;
+    console.log('设置的logoUrl:', trademarkform.logoUrl);
 }
 // 图片上传之前 / 判断上传的图片格式大小是否符合要求
 const beforeAvatarUpload = (file: any) => {

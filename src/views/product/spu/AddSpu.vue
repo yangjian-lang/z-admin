@@ -20,7 +20,7 @@
                 <!-- SPU图标 -->
                 <el-form-item label="SPU图标">
                     <el-upload v-model:file-list="spuImageList" action="/api/admin/product/fileUpload"
-                        list-type="picture-card" :on-preview="handlePictureCardPreview" :on-remove="handleRemove">
+                        list-type="picture-card" :on-preview="handlePictureCardPreview" :on-remove="handleRemove" :headers="{ token: localStorage.getItem('token') }">
                         <el-icon>
                             <Plus />
                         </el-icon>
@@ -241,7 +241,7 @@ const handleSave = async () => {
             spuId: item.spuId
         }
         if (item.response) { // 新增图片
-            imgObj.imgUrl = item.response.data
+            imgObj.imgUrl = item.response.url
         } else { // 原有图片
             imgObj.imgUrl = item.url
         }
